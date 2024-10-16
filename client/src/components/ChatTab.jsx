@@ -6,7 +6,7 @@ const ChatTab = ({ username, icon }) => {
             <img src={icon} alt="avatar"></img>
             <div className="about">
                 <div className="name">{username}</div>
-                <div className="status"> <i className="fa fa-circle offline"></i> offline since Oct 28 </div>
+                <div className="status"> <i className="fa fa-circle offline"></i> online since Oct 28 </div>
             </div>
         </li>
     )

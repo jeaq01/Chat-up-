@@ -1,30 +1,51 @@
 // This is the chat box component the for Chat page
 
+import { useState } from "react";
 import ChatHistory from "./ChatHistory";
-
-const messages = [
-    {
-        date: "10:10 AM, Today",
-        message: "Hi Aiden, how are you? How is the project coming along?",
-        mesengerId: 2
-    },
-    {
-        date: "10:12 AM, Today",
-        message: "Are we meeting today?",
-        mesengerId: 1
-    },
-    {
-        date: "10:15 AM, Today",
-        message: "Project has been already finished and I have results to show you.",
-        mesengerId: 1 // ID eventually should be the userId from your database
-    }
-]
 // Replace this with your data from your database
 // 1. Finish server folder (Set up express, Setup Mongo)
 // 2. Replace messages and users with data from your database
 // 3. Finish styling on front end
 
 const ChatBox = () => {
+
+    const [messages, setMessages] =  useState([
+        {
+            date: "10:10 AM, Today",
+            message: "Hi Aiden, how are you? How is the project coming along?",
+            mesengerId: 2
+        },
+        {
+            date: "10:12 AM, Today",
+            message: "Are we meeting today?",
+            mesengerId: 1
+        },
+        {
+            date: "10:15 AM, Today",
+            message: "Project has been already finished and I have results to show you.",
+            mesengerId: 1 // ID eventually should be the userId from your database
+        }
+    ])
+
+
+    const sendMessage = (event) => {
+        if((event.type == "keydown" && event.key === 'Enter') || event.type == "click") {
+                const chatInputBox = document.getElementById("chat-input-box");
+                
+                setMessages([
+                    ...messages,
+                    {
+                        date: "11:15 AM, Today",
+                        message: chatInputBox.value,
+                        mesengerId: 1 
+                    }
+                ])
+
+
+        }
+      };
+
+
     return (
         <div className="chat">
                                 {/* Chat box */}
@@ -74,10 +95,17 @@ const ChatBox = () => {
                                 <div className="chat-message clearfix">
                                     {/* Input box */}
                                     <div className="input-group mb-0">
-                                        <div className="input-group-prepend">
+                            
+                                        <input 
+                                            id="chat-input-box"
+                                            type="text" 
+                                            className="form-control" 
+                                            placeholder="Enter text here..."
+                                            onKeyDown={sendMessage}
+                                        ></input>            
+                                        <button className="input-group-prepend" onClick={sendMessage}>
                                             <span className="input-group-text"><i className="fa fa-send"></i></span>
-                                        </div>
-                                        <input type="text" className="form-control" placeholder="Enter text here..."></input>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
