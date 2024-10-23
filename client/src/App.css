@@ -1,12 +1,12 @@
 body{
-  background-color: #f4f7f6;
-  margin-top:20px;
+  background-color: #12395d;
+  margin: 15px;
 }
 .card {
-  background: #fff;
+  background: #1d5c96;
   transition: .5s;
   border: 0;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   border-radius: .55rem;
   position: relative;
   width: 100%;
@@ -23,7 +23,7 @@ body{
 
 .chat-app .chat {
   margin-left: 280px;
-  border-left: 1px solid #eaeaea
+  border-left: 1px solid #7db0de;
 }
 
 .people-list {
@@ -34,18 +34,18 @@ body{
 }
 
 .people-list .chat-list li {
-  padding: 10px 15px;
+  padding: 10px 10px;
   list-style: none;
-  border-radius: 3px
+  border-radius: 5px
 }
 
 .people-list .chat-list li:hover {
-  background: #efefef;
+  background: #0a33a4;
   cursor: pointer
 }
 
 .people-list .chat-list li.active {
-  background: #efefef
+  background: #7db0de
 }
 
 .people-list .chat-list li .name {
@@ -53,7 +53,7 @@ body{
 }
 
 .people-list .chat-list img {
-  width: 45px;
+  width: 35px;
   border-radius: 50%
 }
 
@@ -68,13 +68,13 @@ body{
 }
 
 .people-list .status {
-  color: #999;
-  font-size: 13px
+  color: rgb(84, 135, 231);
+  font-size: 15px
 }
 
 .chat .chat-header {
   padding: 15px 20px;
-  border-bottom: 2px solid #f4f7f6
+  border-bottom: 2px solid #7db0de
 }
 
 .chat .chat-header img {
@@ -90,7 +90,7 @@ body{
 
 .chat .chat-history {
   padding: 20px;
-  border-bottom: 2px solid #fff
+  border-bottom: 2px solid #7db0de
 }
 
 .chat .chat-history ul {
@@ -116,12 +116,12 @@ body{
 }
 
 .chat .chat-history .message-data-time {
-  color: #434651;
+  color: silver;
   padding-left: 6px
 }
 
 .chat .chat-history .message {
-  color: #444;
+  color: darkslategray;
   padding: 18px 20px;
   line-height: 26px;
   font-size: 16px;
@@ -139,13 +139,13 @@ body{
   width: 0;
   position: absolute;
   pointer-events: none;
-  border-bottom-color: #fff;
+  border-bottom-color: #7db0de;
   border-width: 10px;
   margin-left: -10px
 }
 
 .chat .chat-history .my-message {
-  background: #efefef
+  background: rgb(116, 196, 243);
 }
 
 .chat .chat-history .my-message:after {
@@ -157,23 +157,23 @@ body{
   width: 0;
   position: absolute;
   pointer-events: none;
-  border-bottom-color: #efefef;
+  border-bottom-color: rgb(116, 196, 243);
   border-width: 10px;
   margin-left: -10px
 }
 
 .chat .chat-history .other-message {
-  background: #e8f1f3;
+  background: hsl(201, 78%, 51%);
   text-align: right
 }
 
 .chat .chat-history .other-message:after {
-  border-bottom-color: #e8f1f3;
+  border-bottom-color: hsl(201, 78%, 51%);
   left: 93%
 }
 
 .chat .chat-message {
-  padding: 20px
+  padding: 10px
 }
 
 .online,
@@ -214,8 +214,8 @@ body{
       height: 465px;
       width: 100%;
       overflow-x: auto;
-      background: #fff;
-      left: -400px;
+      background: steelblue;
+      left: -200px;
       display: none
   }
   .chat-app .people-list.open {
