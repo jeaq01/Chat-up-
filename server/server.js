@@ -1,12 +1,15 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const { graphqlHTTP } = require('express-graphql');
 const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');
 const Message = require('./db/models/message');
-
+const schema = require('./schema');
 const app = express();
+
+  // Create HTTP server
 const server = http.createServer(app);
 const io = socketIo(server);
 
@@ -19,20 +22,28 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
 
-// Socket.io events
-io.on('connection', (socket) => {
+
+// Set up GraphQL endpoint
+app.use('/graphql', graphqlHTTP({
+  schema,
+  rootValue: root,
+  graphiql: true,
+}));
+
+ // Socket.io events
+  io.on('connection', (socket) => {
   console.log('New client connected');
 
   // Fetch messages from the database
   Message.find().sort({ timestamp: 1 }).then(messages => {
-    socket.emit('previousMessages', messages);
+  socket.emit('previousMessages', messages);
   });
 
   // Listen for new messages
-  socket.on('sendMessage', (data) => {
+    socket.on('sendMessage', (data) => {
     const newMessage = new Message(data);
-    newMessage.save().then(() => {
-      io.emit('newMessage', newMessage); // this is to broadcast new message to all clients
+     newMessage.save().then(() => {
+     io.emit('newMessage', newMessage); // this is to broadcast new message to all clients
     });
   });
 
