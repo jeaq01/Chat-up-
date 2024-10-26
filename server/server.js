@@ -15,12 +15,19 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://127.0.0.1:27017/chatupDB', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
 
-// Socket.io events
-io.on('connection', (socket) => {
+
+// Set up GraphQL endpoint
+app.use('/graphql', graphqlHTTP({
+  schema,
+  graphiql: true,
+}));
+
+ // Socket.io events
+  io.on('connection', (socket) => {
   console.log('New client connected');
 
   // Fetch messages from the database
