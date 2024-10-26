@@ -1,6 +1,9 @@
 // This file contains the content for the Chat page. It is the left hand column that displays all chats
 
+import { useState } from "react";
 import ChatTab from "./ChatTab";
+
+// const[socket, setSocket] = useState();
 
 const users = [
     {
@@ -32,5 +35,7 @@ const Chats = () => {
         </div>
     )
 };
+
+
 
 export default Chats;

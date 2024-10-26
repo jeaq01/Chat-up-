@@ -8,20 +8,45 @@ const Message = require('./db/models/message');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
+const io = socketIo(server, {
+  cors: {
+    origin: "*",
+    methods: ["PUT", "GET", "POST", "DELETE", "OPTIONS"],
+    credentials: false
+  }
+});
 
 app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
+mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/chatupDB", { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(async () => {
+
+    // Seed the database
+    await Message.deleteMany({}); // erases all messages in db
+
+    // adds these two messages in db
+    await Message.create([
+      {
+        username: "test1",
+        message: "Hello World!"
+      },
+      {
+        username: "test2",
+        message: "Hi there!!"
+      }
+    ])
+
+    console.log('MongoDB connected')
+  })
   .catch(err => console.log(err));
 
-// Socket.io events
+// Run when client connects 
 io.on('connection', (socket) => {
   console.log('New client connected');
+  
 
   // Fetch messages from the database
   Message.find().sort({ timestamp: 1 }).then(messages => {
@@ -30,14 +55,17 @@ io.on('connection', (socket) => {
 
   // Listen for new messages
   socket.on('sendMessage', (data) => {
+    console.log(data)
     const newMessage = new Message(data);
     newMessage.save().then(() => {
       io.emit('newMessage', newMessage); // this is to broadcast new message to all clients
     });
   });
 
+  //Runs when client diconnects 
   socket.on('disconnect', () => {
     console.log('Client disconnected');
+
   });
 });
 
