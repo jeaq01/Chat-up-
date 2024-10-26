@@ -42,8 +42,10 @@ const REGISTER = gql`
 const LOGIN = gql`
     mutation($username: String!, $password: String!) {
         login(username: $username, password: $password) {
-            id
-            username
+            user {
+                id
+                username
+            }
             token
         }
     }

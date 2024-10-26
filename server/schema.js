@@ -23,6 +23,14 @@ const MessageType = new GraphQLObjectType({
     }),
 });
 
+const AuthType = new GraphQLObjectType({
+    name: 'Auth',
+    fields: () => ({
+        user: { type: UserType },
+        token: { type: GraphQLString }
+    }),
+});
+
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
@@ -52,13 +60,14 @@ const Mutation = new GraphQLObjectType({
                 password: { type: new GraphQLNonNull(GraphQLString) },
             },
             async resolve(parent, args) {
-                const hashedPassword = await bcrypt.hash(args.password, 10);
-                const user = new User({ username: args.username, password: hashedPassword });
+                // const hashedPassword = await bcrypt.hash(args.password, 10);
+                // const user = new User({ username: args.username, password: hashedPassword });
+                const user = new User({ username: args.username, password: args.password });
                 return user.save();
             },
         },
         login: {
-            type: UserType,
+            type: AuthType,
             args: {
                 username: { type: new GraphQLNonNull(GraphQLString) },
                 password: { type: new GraphQLNonNull(GraphQLString) },
@@ -66,9 +75,15 @@ const Mutation = new GraphQLObjectType({
             async resolve(parent, args) {
                 const user = await User.findOne({ username: args.username });
                 if (!user) throw new Error('User not found');
-                const valid = await bcrypt.compare(args.password, user.password);
+                console.log(user.password)
+                console.log(args.password)
+                // const valid = await bcrypt.compare(args.password, user.password);
+                const valid = await user.comparePassword(args.password);
+                console.log(valid)
                 if (!valid) throw new Error('Invalid password');
-                const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                // const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                const JWT_SECRET = "putThisInYourENVFile"
+                const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' });
                 return { ...user._doc, token };
             },
         },
