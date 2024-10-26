@@ -2,32 +2,41 @@
 
 import { useState } from "react";
 import ChatTab from "./ChatTab";
-
-// const[socket, setSocket] = useState();
-
-const users = [
-    {
-        username: "Vincent Porter",
-        icon: "https://bootdey.com/img/Content/avatar/avatar1.png"
-    },
-    {
-        username: "Aiden Chavez",
-        icon: "https://bootdey.com/img/Content/avatar/avatar2.png"
-    },
-    {
-        username: "Mike Thomas",
-        icon: "https://bootdey.com/img/Content/avatar/avatar3.png"
-    }
-]
+import dummyDataUsers from "./dummyDataUsers"
 
 const Chats = () => {
+
+    // const users = dummyDataUsers;
+    const [users, setUsers] = useState(dummyDataUsers)
+
+    function clearSearch() {
+        setUsers([])
+    }
+
+    function changeHandler(event) {
+        const searchWord = event.target.value
+        console.log(searchWord);
+
+        const filteredUsers = dummyDataUsers.filter(userdata => {
+            if(userdata.username.toLowerCase().includes(searchWord.toLowerCase())) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+        console.log(filteredUsers)
+        setUsers(filteredUsers)
+    }
+
     return (
         <div id="plist" className="people-list">
+            <button onClick={clearSearch}>Clear</button>
             <div className="input-group">
                 <div className="input-group-prepend">
                     <span className="input-group-text"><i className="fa fa-search"></i></span>
                 </div>
-                <input type="text" className="form-control" placeholder="Search..."></input>
+                <input onChange={changeHandler} type="text" className="form-control" placeholder="Search..."></input>
             </div>
             <ul className="list-unstyled chat-list mt-2 mb-0">
                 {users.map((user, idx) => <ChatTab key={idx} username={user.username} icon={user.icon} />)}
