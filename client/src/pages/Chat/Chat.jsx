@@ -5,6 +5,7 @@ import { useQuery, useMutation, gql } from '@apollo/client';
 import { io } from 'socket.io-client';
 const socket = io('http://localhost:10000');
 import './Chat.css';
+import dayjs from "dayjs"
 
 const GET_MESSAGES = gql`
     query {
@@ -58,24 +59,25 @@ function Chat({username}) {
     } 
 
     function formatDateString(dateString) {
-        const date = new Date(dateString);
+        return dayjs(parseInt(dateString)).format("MM/D/YYYY h:mm a")
+        //const date = new Date(dateString);
         
         // Get month abbreviation
-        const month = date.toLocaleString("en-US", { month: "short" });
+       // const month = date.toLocaleString("en-US", { month: "short" });
         
         // Get day
-        const day = date.getDate();
+        //const day = date.getDate();
         
         // Get hours and minutes
-        let hours = date.getHours();
-        const minutes = date.getMinutes().toString().padStart(2, "0");
+        //let hours = date.getHours();
+        //const minutes = date.getMinutes().toString().padStart(2, "0");
         
         // Determine AM/PM
-        const ampm = hours >= 12 ? "PM" : "AM";
-        hours = hours % 12 || 12; // Convert to 12-hour format
+        //const ampm = hours >= 12 ? "PM" : "AM";
+        //hours = hours % 12 || 12; // Convert to 12-hour format
     
         // Construct the formatted date string
-        return `${month} ${day}, ${hours}:${minutes} ${ampm}`;
+        //return `${month} ${day}, ${hours}:${minutes} ${ampm}`;
     }
 
     return (

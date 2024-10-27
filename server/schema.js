@@ -90,7 +90,7 @@ const Mutation = new GraphQLObjectType({
                 const message = new Message({
                     message: args.message,
                     username: args.username,
-                    timestamp: new Date().toDateString(),
+                    timestamp: new Date().valueOf().toString()
                 });
                 return message.save();
             },
