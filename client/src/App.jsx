@@ -6,11 +6,11 @@ import './pages/Login/Login';
 import Chat from './pages/Chat/Chat';
 import Login from './pages/Login/Login';
 
-const socket = io('http://localhost:3000');
+const socket = io('http://localhost:1000');
 
 
 const client = new ApolloClient({
-    uri: 'http://localhost:3000/graphql',
+    uri: 'http://localhost:1000/graphql',
     cache: new InMemoryCache(),
 });
 
