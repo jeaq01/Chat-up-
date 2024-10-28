@@ -7,7 +7,7 @@ import Chat from './pages/Chat/Chat';
 import Login from './pages/Login/Login';
 
 const client = new ApolloClient({
-    uri: 'http://localhost:10000/graphql',
+    uri: '/graphql',
     cache: new InMemoryCache(),
 });
 

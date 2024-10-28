@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import { io } from 'socket.io-client';
-const socket = io('http://localhost:10000');
+const socket = io('/');
 import './Chat.css';
 
 const GET_MESSAGES = gql`
